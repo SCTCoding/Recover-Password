@@ -21,6 +21,7 @@ script AppDelegate
 	
 	on applicationWillFinishLaunching_(aNotification)
 		-- Insert code here to initialize your application before any files are opened
+        set the stringValue of basePath to "/Volumes/Macintosh\\ HD"
 	end applicationWillFinishLaunching_
 	
 	on applicationShouldTerminate_(sender)
@@ -50,9 +51,13 @@ script AppDelegate
         do res[$i]=$((${one[$i]:-0} ^ ${res[$i]:-0}));
         done; shift 1; done; printf \"%02x\" \"${res[@]}\"; }; recpw=$(xor $target $mn | sed 's/00.*//' | xxd -r -p); echo $recpw;" with administrator privileges
         
-       
-       set the stringValue of passReturn to currentpw
-        
+      -- Blank password handler
+       if currentpw is "" then
+        set the stringValue of passReturn to "The user has no password."
+       else
+        set the stringValue of passReturn to currentpw
+    end if
+    
     end passrec_
 
     on quit_(sender)
